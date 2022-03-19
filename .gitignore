@@ -1,0 +1,13 @@
+!.gitignore
+client/src/components/api.js
+release
+
+# database
+db/data.json
+db/data.json.bkup
+
+# client dependency
+client/node_modules
+
+# api
+client/src/components/api.js
