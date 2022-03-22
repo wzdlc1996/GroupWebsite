@@ -8,6 +8,10 @@ db/data.json.bkup
 
 # client dependency
 client/node_modules
+client/src/assets
+
+client/public/cat.png
 
 # api
 client/src/components/api.js
+client/src/components/site_config.js

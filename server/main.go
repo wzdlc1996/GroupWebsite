@@ -1,22 +1,19 @@
 package main
 
 import (
-	"embed"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/wzdlc1996/GroupWebsite/server/dataio"
 )
 
-var embFiles embed.FS
-
 func main() {
 	r := gin.Default()
 	r.Use(CORSMiddleware())
-	r.GET("/qReport", func(c *gin.Context) {
+	r.GET("/api/qReport", func(c *gin.Context) {
 		c.JSON(200, dataio.QueryLatestReport())
 	})
-	r.POST("/aComment", func(ctx *gin.Context) {
+	r.POST("/api/aComment", func(ctx *gin.Context) {
 		var newComment dataio.CommentItem
 		if err := ctx.BindJSON(&newComment); err != nil {
 			return
