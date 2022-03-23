@@ -1,26 +1,8 @@
 import React from "react";
 import { apiMap } from "./api";
+import { genCommentItem } from "./funcs";
 
 import 'bootstrap/dist/css/bootstrap.css'
-
-
-function getTimestamp() {
-    return Date.now();
-}
-
-
-function getDate() {
-    return Date();
-}
-
-
-function genCommentItem(text) {
-    return {
-        time: getTimestamp(),
-        date: getDate(),
-        content: text,
-    };
-}
 
 
 class Textin extends React.Component {

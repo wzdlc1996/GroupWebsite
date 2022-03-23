@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/wzdlc1996/GroupWebsite/server/dataio"
+	"github.com/wzdlc1996/GroupWebsite/server/usrcheck"
 )
 
 func main() {
@@ -20,6 +21,21 @@ func main() {
 		}
 		dataio.AppendCommentToLatest(newComment)
 		ctx.IndentedJSON(http.StatusCreated, newComment)
+	})
+	r.POST("/api/aReport", func(ctx *gin.Context) {
+		var newReport dataio.Report
+		if err := ctx.BindJSON(&newReport); err != nil {
+			return
+		}
+		dataio.AppendReport(newReport)
+		ctx.IndentedJSON(http.StatusCreated, newReport)
+	})
+	r.POST("/api/qUsrCorrect", func(ctx *gin.Context) {
+		var newUsrId usrcheck.UsrId
+		if err := ctx.BindJSON(&newUsrId); err != nil {
+			return
+		}
+		ctx.IndentedJSON(http.StatusAccepted, usrcheck.IsUsrCorrect(newUsrId))
 	})
 
 	r.Run()

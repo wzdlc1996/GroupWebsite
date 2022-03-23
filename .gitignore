@@ -5,6 +5,7 @@ release
 # database
 db/data.json
 db/data.json.bkup
+db/usr.txt
 
 # client dependency
 client/node_modules

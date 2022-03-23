@@ -1,26 +1,69 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom'
 
 import './index.css';
 import Board from './components/Board';
 import Textin from './components/Textin'
-import Navbar from "./components/Navbar"
+import Navbar from "./components/RBNavbar"
+import ReportUpload from "./components/ReportUpload"
 
-function Mainpage(props) {
+
+
+function Homepage(props) {
     return (
         <div>
             <div>
-            ::before
                 <Navbar />
             </div>
-            
             <div className="container">
-            ::before
                 <Board />
                 <Textin />
             </div>
         </div>
+    )
+}
+
+
+function Report(props) {
+    return (
+        <div>
+            <div>
+                <Navbar />
+            </div>
+            <div className="container">
+                <Board />
+                <Textin />
+            </div>
+        </div>
+    )
+}
+
+
+function AddReport(props) {
+    return (
+        <div>
+            <div>
+                <Navbar />
+            </div>
+            <div className="container">
+                <ReportUpload />
+            </div>
+        </div>
+    )
+}
+
+
+function App(props) {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route path="/report" element={<Report />} />
+                <Route path="/upload" element={<AddReport />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
-ReactDOM.render(<Mainpage />, document.getElementById('root'));
+render(<App />, document.getElementById('root'));
