@@ -6,7 +6,7 @@ import (
 	"sort"
 )
 
-const dbpath string = "../db/fakedata.json"
+const dbpath string = "../db/data.json"
 
 func LoadData() []Report {
 	fp, err := os.ReadFile(dbpath)

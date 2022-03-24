@@ -10,6 +10,7 @@ db/usr.txt
 # client dependency
 client/node_modules
 client/src/assets
+cliend/build
 
 client/public/cat.png
 

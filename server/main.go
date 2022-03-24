@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/wzdlc1996/GroupWebsite/server/dataio"
 	"github.com/wzdlc1996/GroupWebsite/server/usrcheck"
@@ -37,7 +38,9 @@ func main() {
 		}
 		ctx.IndentedJSON(http.StatusAccepted, usrcheck.IsUsrCorrect(newUsrId))
 	})
-
+	r.Use(static.Serve("/", static.LocalFile("../release/build", true)))
+	r.Use(static.Serve("/upload", static.LocalFile("../release/build", true)))
+	r.Use(static.Serve("/report", static.LocalFile("../release/build", true)))
 	r.Run()
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Route, Routes, BrowserRouter } from 'react-router-dom'
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'
 
 import './index.css';
 import Board from './components/Board';
@@ -56,13 +56,13 @@ function AddReport(props) {
 
 function App(props) {
     return (
-        <BrowserRouter>
+        <Router>
             <Routes>
-                <Route path="/" element={<Homepage />} />
-                <Route path="/report" element={<Report />} />
-                <Route path="/upload" element={<AddReport />} />
+                <Route exact path="/" element={<Homepage />} />
+                <Route exact path="/report" element={<Report />} />
+                <Route exact path="/upload" element={<AddReport />} />
             </Routes>
-        </BrowserRouter>
+        </Router>
     );
 }
 
