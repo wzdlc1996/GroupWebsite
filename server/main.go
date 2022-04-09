@@ -21,7 +21,7 @@ func main() {
 			return
 		}
 		dataio.AppendCommentToLatest(newComment)
-		ctx.IndentedJSON(http.StatusCreated, newComment)
+		ctx.JSON(http.StatusCreated, newComment)
 	})
 	r.POST("/api/aReport", func(ctx *gin.Context) {
 		var newReport dataio.Report
@@ -29,18 +29,22 @@ func main() {
 			return
 		}
 		dataio.AppendReport(newReport)
-		ctx.IndentedJSON(http.StatusCreated, newReport)
+		ctx.JSON(http.StatusCreated, newReport)
 	})
 	r.POST("/api/qUsrCorrect", func(ctx *gin.Context) {
 		var newUsrId usrcheck.UsrId
 		if err := ctx.BindJSON(&newUsrId); err != nil {
 			return
 		}
-		ctx.IndentedJSON(http.StatusAccepted, usrcheck.IsUsrCorrect(newUsrId))
+		ctx.JSON(http.StatusAccepted, usrcheck.IsUsrCorrect(newUsrId))
+	})
+	r.GET("/api/qPastReports", func(ctx *gin.Context) {
+		ctx.IndentedJSON(200, dataio.QueryPastReports())
 	})
 	r.Use(static.Serve("/", static.LocalFile("../release/build", true)))
 	r.Use(static.Serve("/upload", static.LocalFile("../release/build", true)))
 	r.Use(static.Serve("/report", static.LocalFile("../release/build", true)))
+	r.Use(static.Serve("/archive", static.LocalFile("../release/build", true)))
 	r.Run()
 }
 

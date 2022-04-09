@@ -13,7 +13,6 @@ function CommentItem(props) {
                 <p className="card-text">{commentItem.content}</p>
             </div>
         </div>
-        
     )
 }
 

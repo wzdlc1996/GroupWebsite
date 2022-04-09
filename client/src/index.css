@@ -5,3 +5,7 @@ body {
 .display-p {
     white-space: pre-line;
 }
+
+.miniAbsTitle {
+    font-size: 150%;
+}

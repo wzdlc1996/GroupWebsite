@@ -7,6 +7,7 @@ import Board from './components/Board';
 import Textin from './components/Textin'
 import Navbar from "./components/RBNavbar"
 import ReportUpload from "./components/ReportUpload"
+import PastRepList from "./components/PastReports"
 
 
 
@@ -53,6 +54,19 @@ function AddReport(props) {
     )
 }
 
+function PastRep(props) {
+    return (
+        <div>
+            <div>
+                <Navbar />
+            </div>
+            <div className="container">
+                <PastRepList />
+            </div>
+        </div>
+    )
+}
+
 
 function App(props) {
     return (
@@ -61,6 +75,7 @@ function App(props) {
                 <Route exact path="/" element={<Homepage />} />
                 <Route exact path="/report" element={<Report />} />
                 <Route exact path="/upload" element={<AddReport />} />
+                <Route exact path="/archive" element={<PastRep />} />
             </Routes>
         </Router>
     );

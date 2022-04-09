@@ -32,6 +32,11 @@ func QueryLatestReport() Report {
 	return data[0]
 }
 
+func QueryPastReports() []Report {
+	data := LoadData()
+	return data[1:]
+}
+
 func AppendReport(rep Report) {
 	data := LoadData()
 	v := []Report{rep}
