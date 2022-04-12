@@ -1,7 +1,10 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
+	"path"
 
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
@@ -12,9 +15,11 @@ import (
 func main() {
 	r := gin.Default()
 	r.Use(CORSMiddleware())
+
 	r.GET("/api/qReport", func(c *gin.Context) {
-		c.JSON(200, dataio.QueryLatestReport())
+		c.JSON(http.StatusOK, dataio.QueryLatestReport())
 	})
+
 	r.POST("/api/aComment", func(ctx *gin.Context) {
 		var newComment dataio.CommentItem
 		if err := ctx.BindJSON(&newComment); err != nil {
@@ -23,14 +28,25 @@ func main() {
 		dataio.AppendCommentToLatest(newComment)
 		ctx.JSON(http.StatusCreated, newComment)
 	})
+
 	r.POST("/api/aReport", func(ctx *gin.Context) {
 		var newReport dataio.Report
-		if err := ctx.BindJSON(&newReport); err != nil {
+		frm, err := ctx.MultipartForm()
+		if err != nil {
 			return
 		}
+		json.Unmarshal([]byte(frm.Value["data"][0]), &newReport) // read the report body, according to the client
+		file, _ := ctx.FormFile("file")                          // read the file uploaded
 		dataio.AppendReport(newReport)
+
+		if file != nil {
+			ctx.SaveUploadedFile(file, dataio.SlidesFileNameDst(
+				fmt.Sprint(newReport.Uptime, path.Ext(file.Filename)),
+			))
+		}
 		ctx.JSON(http.StatusCreated, newReport)
 	})
+
 	r.POST("/api/qUsrCorrect", func(ctx *gin.Context) {
 		var newUsrId usrcheck.UsrId
 		if err := ctx.BindJSON(&newUsrId); err != nil {
@@ -38,9 +54,22 @@ func main() {
 		}
 		ctx.JSON(http.StatusAccepted, usrcheck.IsUsrCorrect(newUsrId))
 	})
+
 	r.GET("/api/qPastReports", func(ctx *gin.Context) {
-		ctx.IndentedJSON(200, dataio.QueryPastReports())
+		ctx.IndentedJSON(http.StatusOK, dataio.QueryPastReports())
 	})
+
+	r.GET("/api/qSlides", func(ctx *gin.Context) {
+		uptime := ctx.Query("uptime")
+		//ctx.File(fmt.Sprintf("../db/slides/%s.pptx", filename))
+		filename, _, exists := dataio.GetSlidesByUptime(uptime)
+		if !exists {
+			return
+		}
+		ctx.Header("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", path.Base(filename)))
+		ctx.File(filename)
+	})
+
 	r.Use(static.Serve("/", static.LocalFile("../release/build", true)))
 	r.Use(static.Serve("/upload", static.LocalFile("../release/build", true)))
 	r.Use(static.Serve("/report", static.LocalFile("../release/build", true)))

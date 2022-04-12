@@ -62,6 +62,18 @@ class Board extends React.Component{
             <p className="display-p">
                 {report.abstract}
             </p>
+            <button 
+                className="btn btn-secondary" 
+                onClick={
+                    (e) => {
+                        e.preventDefault();
+                        window.location.href =  apiMap.querySlidesByUptime(this.state.report.uptime) 
+                    }
+                }
+            >
+                Click me to see slides
+            </button>
+            <hr />
             <CommentList commentList={report.comment}/>
             
             </div>

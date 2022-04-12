@@ -6,6 +6,7 @@ release
 db/data.json
 db/data.json.bkup
 db/usr.txt
+db/slides/*
 
 # client dependency
 client/node_modules

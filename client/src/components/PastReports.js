@@ -14,9 +14,12 @@ function MiniAbsItem(props) {
                 >{absitem.date} <span className="miniAbsTitle">{absitem.title}</span></Card.Header>
                 <Collapse in={open}>
                 <Card.Body id={"carbodyof" + absitem.date}>
-                    <Card.Text>
+                    <Card.Text className="display-p">
                         {absitem.abstract}
                     </Card.Text>
+                    <a href={apiMap.querySlidesByUptime(absitem.uptime)}>
+                        See Slides
+                    </a>
                 </Card.Body>
                 </Collapse>
             </Card>

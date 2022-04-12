@@ -12,6 +12,7 @@ type CommentItem struct {
 
 // Report is the data struct for a single report
 // Thus the data.json should be the list of Report
+// Any report's slides (if exists) shall be at db/slides/Uptime.ext
 type Report struct {
 	Title    string        `json:"title"`
 	Abstract string        `json:"abstract"`
